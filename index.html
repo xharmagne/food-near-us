@@ -106,14 +106,21 @@
             // });
 
             map.panTo(center);
-            map.setZoom(17);
+
+            var bounds = new google.maps.LatLngBounds();
+            bounds.extend(place1.geometry.location);
+            bounds.extend(place2.geometry.location);
+            map.fitBounds(bounds, 5);
+            // map.setZoom(17);
 
 
 
             // Do search
+            var distBetweenPoints = google.maps.geometry.spherical.computeDistanceBetween(place1.geometry.location, place2.geometry.location);
+            var radius = distBetweenPoints / 8;
             var searchRequest = {
                 location: center,
-                radius: '100',
+                radius: radius.toString(),
                 type: ['restaurant']
             };
 
